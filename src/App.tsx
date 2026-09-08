@@ -51,6 +51,37 @@ function UpdateHelper() {
   );
 }
 
+function ClickDebugOverlay() {
+  const [info, setInfo] = useState<string | null>(null);
+  const isMobile = typeof navigator !== 'undefined' && /Mobi|Android|iPhone/i.test(navigator.userAgent);
+  if (!isMobile) return null;
+
+  useEffect(() => {
+    const handler = (e: Event) => {
+      try {
+        const ev = e as MouseEvent & TouchEvent & PointerEvent;
+        const target = (ev.target as Element) || null;
+        const desc = target ? `${target.tagName.toLowerCase()}${target.className ? ' .' + target.className : ''}${target.id ? ' #' + target.id : ''}` : 'no-target';
+        setInfo(`${desc} @ ${Math.round((ev as any).clientX || 0)},${Math.round((ev as any).clientY || 0)}`);
+      } catch (e) {
+        setInfo('err');
+      }
+    };
+    document.addEventListener('click', handler, true);
+    document.addEventListener('touchstart', handler, true);
+    return () => {
+      document.removeEventListener('click', handler, true);
+      document.removeEventListener('touchstart', handler, true);
+    };
+  }, []);
+
+  return (
+    <div style={{ position: 'fixed', top: 12, right: 12, zIndex: 99999 }}>
+      <div style={{ background: 'rgba(0,0,0,0.6)', color: '#fff', padding: '6px 8px', borderRadius: 6, fontSize: 12, maxWidth: 220 }}>{info ?? 'no clicks yet'}</div>
+    </div>
+  );
+}
+
 /**
  * 참여자가 보는 화면 전체 흐름입니다.
  * - 아직 게임을 시작하지 않았으면 시작 화면
@@ -88,6 +119,7 @@ function App() {
   return (
     <BrowserRouter>
       <UpdateHelper />
+      <ClickDebugOverlay />
       <Routes>
         <Route path="/" element={<ParticipantFlow />} />
         <Route path="/admin" element={<AdminHomePage />} />
