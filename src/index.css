@@ -1,0 +1,792 @@
+/* ─────────────────────────────────────────────────────────
+   전역 스타일. 모바일 화면을 기준(모바일 퍼스트)으로 작성했고,
+   화면이 넓어지면(태블릿/PC) 아래쪽 @media 구간에서 살짝 더 넓게 보이도록 합니다.
+   ───────────────────────────────────────────────────────── */
+
+:root {
+  --color-bg: #f5f7fb;
+  --color-surface: #ffffff;
+  --color-primary: #4f6df5;
+  --color-primary-dark: #3852d6;
+  --color-text: #1f2430;
+  --color-text-muted: #6b7280;
+  --color-border: #e3e7ef;
+  --color-success: #22c55e;
+  --color-success-bg: #eafcef;
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+  --shadow-card: 0 8px 24px rgba(31, 36, 48, 0.08);
+
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo',
+    'Segoe UI', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* ── 공통 버튼 ───────────────────────────────────────── */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 16px 20px;
+  border: none;
+  border-radius: var(--radius-md);
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.05s ease, opacity 0.15s ease, background 0.15s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn-primary:not(:disabled):hover {
+  background: var(--color-primary-dark);
+}
+
+.btn-secondary {
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border: 1.5px solid var(--color-border);
+}
+
+/* ── 시작 화면 ───────────────────────────────────────── */
+
+.start-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.start-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 36px 24px;
+  text-align: center;
+}
+
+.start-title {
+  font-size: 28px;
+  margin: 0 0 12px;
+}
+
+.start-description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  margin: 0 0 28px;
+}
+
+.start-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.start-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.start-input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 16px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.start-input:focus {
+  border-color: var(--color-primary);
+}
+
+.start-button {
+  margin-top: 14px;
+}
+
+/* ── 빙고 화면 ───────────────────────────────────────── */
+
+.bingo-page {
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 20px 16px 40px;
+}
+
+.bingo-page-note {
+  color: var(--color-text-muted);
+  font-size: 13px;
+  text-align: center;
+  margin-top: 16px;
+}
+
+/* 상단 현황 카드 */
+
+.bingo-header {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 18px 18px 16px;
+  margin-bottom: 18px;
+}
+
+.bingo-header-team {
+  font-size: 19px;
+  font-weight: 800;
+  margin-bottom: 14px;
+}
+
+.bingo-header-stats {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.bingo-stat {
+  flex: 1;
+  text-align: center;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: 10px 4px;
+}
+
+.bingo-stat-value {
+  display: block;
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.bingo-stat-label {
+  display: block;
+  font-size: 11.5px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.bingo-progress-bar {
+  height: 8px;
+  background: var(--color-border);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bingo-progress-fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+/* 4x4 빙고판 */
+
+.bingo-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: 1fr;
+  gap: 8px;
+}
+
+.bingo-cell {
+  position: relative;
+  min-height: 82px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 8px 5px;
+  border: 2px solid transparent;
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  background-size: cover;
+  background-position: center;
+  box-shadow: var(--shadow-card);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-text);
+  text-align: center;
+  cursor: pointer;
+  overflow: hidden;
+  transition: transform 0.05s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.bingo-cell:active {
+  transform: scale(0.96);
+}
+
+.bingo-cell:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.bingo-cell-completed {
+  border-color: var(--color-success);
+}
+
+.bingo-cell-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(21, 128, 61, 0.4);
+}
+
+.bingo-cell-check {
+  font-size: 22px;
+  line-height: 1;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* ── 공통 모달 ───────────────────────────────────────── */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 18, 26, 0.55);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: 88vh;
+  overflow-y: auto;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  padding: 24px 20px 28px;
+  animation: modal-slide-up 0.18s ease-out;
+}
+
+@keyframes modal-slide-up {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media (min-width: 480px) {
+  .modal-overlay {
+    align-items: center;
+    padding: 20px;
+  }
+
+  .modal-content {
+    border-radius: var(--radius-lg);
+    max-height: 85vh;
+  }
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── 미션 상세 모달 ──────────────────────────────────── */
+
+.mission-modal-title {
+  font-size: 20px;
+  margin: 4px 46px 16px 0;
+}
+
+.mission-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mission-modal-description {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.mission-modal-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.mission-modal-section p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.mission-modal-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.mission-modal-file-input {
+  font-size: 14px;
+}
+
+.mission-modal-photo,
+.mission-modal-photo-preview {
+  width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-top: 8px;
+}
+
+.mission-modal-textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.mission-modal-textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.mission-modal-comment {
+  margin: 0;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.mission-modal-completed-badge {
+  text-align: center;
+  color: #15803d;
+  font-weight: 700;
+  background: var(--color-success-bg);
+  border-radius: var(--radius-md);
+  padding: 10px;
+}
+
+.mission-modal-hint {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.mission-modal-error {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #b91c1c;
+}
+
+/* ── 저장 오류 안내 배너 ─────────────────────────────── */
+
+.save-error-banner {
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  font-size: 13px;
+  text-align: center;
+  margin: 0 0 14px;
+}
+
+/* ── 관리자 화면 ─────────────────────────────────────── */
+
+.admin-page {
+  min-height: 100vh;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.admin-title {
+  font-size: 22px;
+  margin: 0 0 16px;
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 6px;
+  background: var(--color-bg);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  margin-bottom: 20px;
+}
+
+.admin-tab {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.admin-tab-active {
+  background: var(--color-surface);
+  color: var(--color-primary);
+  box-shadow: var(--shadow-card);
+}
+
+.admin-section {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 20px;
+}
+
+.admin-section-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.admin-section-title {
+  font-size: 17px;
+  margin: 0 0 4px;
+}
+
+.admin-section-subtitle {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin: 0;
+  max-width: 46ch;
+}
+
+.admin-empty {
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+/* 미션 추가/수정 폼 */
+
+.admin-mission-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-bottom: 18px;
+}
+
+.admin-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.admin-form-field label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.admin-form-field input,
+.admin-form-field textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.admin-form-field input:focus,
+.admin-form-field textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.admin-form-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.admin-form-actions .btn {
+  width: auto;
+  padding: 10px 18px;
+}
+
+/* 미션 목록 */
+
+.admin-mission-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.admin-mission-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.admin-mission-row-inactive {
+  opacity: 0.55;
+}
+
+.admin-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.admin-mission-info {
+  flex: 1;
+  min-width: 160px;
+}
+
+.admin-mission-title {
+  font-weight: 700;
+  font-size: 14.5px;
+}
+
+.admin-mission-description {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.admin-mission-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.admin-text-button {
+  border: none;
+  background: none;
+  color: var(--color-primary);
+  font-size: 13.5px;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 12px 10px;
+  min-height: 44px;
+}
+
+.admin-delete-button {
+  color: #b91c1c;
+}
+
+/* 참여자 현황 테이블 */
+
+.admin-table-wrapper {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.admin-table th,
+.admin-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.admin-table th {
+  color: var(--color-text-muted);
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.admin-status-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.admin-status-done {
+  background: var(--color-success-bg);
+  color: #15803d;
+}
+
+/* ── 빙고 축하 애니메이션 ────────────────────────────── */
+
+.bingo-celebration {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 18, 26, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 2000;
+  animation: celebration-fade-in 0.15s ease-out;
+}
+
+.bingo-celebration-card {
+  width: 100%;
+  max-width: 300px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 32px 28px;
+  text-align: center;
+  animation: celebration-pop 0.3s ease-out;
+}
+
+.bingo-celebration-emoji {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.bingo-celebration-title {
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.bingo-celebration-subtitle {
+  font-size: 15px;
+  color: var(--color-text-muted);
+}
+
+@keyframes celebration-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes celebration-pop {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ── 최종 완료 화면 ──────────────────────────────────── */
+
+.complete-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+.complete-card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 44px 24px;
+  text-align: center;
+}
+
+.complete-emoji {
+  font-size: 56px;
+  margin-bottom: 12px;
+}
+
+.complete-title {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+.complete-description {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* ── 태블릿 이상 화면 ────────────────────────────────── */
+
+@media (min-width: 480px) {
+  .start-card {
+    padding: 44px 36px;
+  }
+}
