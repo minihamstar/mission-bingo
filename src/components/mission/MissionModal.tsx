@@ -71,100 +71,116 @@ export default function MissionModal({
     if (!canSubmit) return;
     onComplete(mission.id, photoDataUrl, comment.trim());
   };
+  const renderContent = () => {
+    return (
+      <Modal isOpen={isOpen} onClose={onClose} ariaLabel={mission.title}>
+        <button type="button" className="modal-close" onClick={onClose} aria-label="닫기">
+          ✕
+        </button>
 
-  return (
-    <Modal isOpen={isOpen} onClose={onClose} ariaLabel={mission.title}>
-      <button type="button" className="modal-close" onClick={onClose} aria-label="닫기">
-        ✕
-      </button>
+        <h2 className="mission-modal-title">{mission.title}</h2>
 
-      <h2 className="mission-modal-title">{mission.title}</h2>
-
-      {isCompleted && completion ? (
-        <div className="mission-modal-body">
-          <img src={completion.photoDataUrl} alt="제출한 인증 사진" className="mission-modal-photo" />
-          <div className="mission-modal-section">
-            <div className="mission-modal-label">소감</div>
-            <p className="mission-modal-comment">{completion.comment}</p>
+        {isCompleted && completion ? (
+          <div className="mission-modal-body">
+            <img src={completion.photoDataUrl} alt="제출한 인증 사진" className="mission-modal-photo" />
+            <div className="mission-modal-section">
+              <div className="mission-modal-label">소감</div>
+              <p className="mission-modal-comment">{completion.comment}</p>
+            </div>
+            <div className="mission-modal-completed-badge">✓ 완료된 미션이에요</div>
           </div>
-          <div className="mission-modal-completed-badge">✓ 완료된 미션이에요</div>
-        </div>
-      ) : (
-        <div className="mission-modal-body">
-          <p className="mission-modal-description">{mission.description}</p>
+        ) : (
+          <div className="mission-modal-body">
+            <p className="mission-modal-description">{mission.description}</p>
 
-          <div className="mission-modal-section">
-            <div className="mission-modal-label">수행 방법</div>
-            <p>{mission.howTo}</p>
-          </div>
-
-          <div className="mission-modal-section">
-            <div className="mission-modal-label">완료 조건</div>
-            <p>{mission.completionCondition}</p>
-          </div>
-
-          <div className="mission-modal-section">
-            <div className="mission-modal-label">인증 사진</div>
-
-            <div className="mission-photo-actions">
-              <Button type="button" onClick={triggerCamera} className="mission-photo-button">
-                사진 새로 찍기
-              </Button>
-              <Button type="button" onClick={triggerLibrary} className="mission-photo-button">
-                앨범에서 가져오기
-              </Button>
+            <div className="mission-modal-section">
+              <div className="mission-modal-label">수행 방법</div>
+              <p>{mission.howTo}</p>
             </div>
 
-            {/* 숨겨진 파일 입력: 카메라 촬영용 (capture) */}
-            <input
-              ref={cameraInputRef}
-              type="file"
-              accept="image/*"
-              capture="environment"
-              onChange={handlePhotoChange}
-              style={{ display: 'none' }}
-            />
+            <div className="mission-modal-section">
+              <div className="mission-modal-label">완료 조건</div>
+              <p>{mission.completionCondition}</p>
+            </div>
 
-            {/* 숨겨진 파일 입력: 앨범 선택용 */}
-            <input
-              ref={libraryInputRef}
-              type="file"
-              accept="image/*"
-              onChange={handlePhotoChange}
-              style={{ display: 'none' }}
-            />
+            <div className="mission-modal-section">
+              <div className="mission-modal-label">인증 사진</div>
 
-            {isProcessingPhoto && <p className="mission-modal-hint">사진을 처리하는 중이에요...</p>}
-            {photoError && <p className="mission-modal-error">{photoError}</p>}
-            {photoDataUrl && !isProcessingPhoto && (
-              <img
-                src={photoDataUrl}
-                alt="첨부한 인증 사진 미리보기"
-                className="mission-modal-photo-preview"
+              <div className="mission-photo-actions">
+                <Button type="button" onClick={triggerCamera} className="mission-photo-button">
+                  사진 새로 찍기
+                </Button>
+                <Button type="button" onClick={triggerLibrary} className="mission-photo-button">
+                  앨범에서 가져오기
+                </Button>
+              </div>
+
+              {/* 숨겨진 파일 입력: 카메라 촬영용 (capture) */}
+              <input
+                ref={cameraInputRef}
+                type="file"
+                accept="image/*"
+                capture="environment"
+                onChange={handlePhotoChange}
+                style={{ display: 'none' }}
               />
-            )}
-          </div>
 
-          <div className="mission-modal-section">
-            <label htmlFor="mission-comment" className="mission-modal-label">
-              소감
-            </label>
-            <textarea
-              id="mission-comment"
-              value={comment}
-              onChange={(event) => setComment(event.target.value)}
-              placeholder="미션을 수행하며 느낀 점을 적어주세요"
-              className="mission-modal-textarea"
-              rows={3}
-              maxLength={300}
-            />
-          </div>
+              {/* 숨겨진 파일 입력: 앨범 선택용 */}
+              <input
+                ref={libraryInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handlePhotoChange}
+                style={{ display: 'none' }}
+              />
 
-          <Button type="button" disabled={!canSubmit} onClick={handleSubmit}>
-            {isProcessingPhoto ? '사진 처리 중...' : '미션 완료'}
-          </Button>
+              {isProcessingPhoto && <p className="mission-modal-hint">사진을 처리하는 중이에요...</p>}
+              {photoError && <p className="mission-modal-error">{photoError}</p>}
+              {photoDataUrl && !isProcessingPhoto && (
+                <img
+                  src={photoDataUrl}
+                  alt="첨부한 인증 사진 미리보기"
+                  className="mission-modal-photo-preview"
+                />
+              )}
+            </div>
+
+            <div className="mission-modal-section">
+              <label htmlFor="mission-comment" className="mission-modal-label">
+                소감
+              </label>
+              <textarea
+                id="mission-comment"
+                value={comment}
+                onChange={(event) => setComment(event.target.value)}
+                placeholder="미션을 수행하며 느낀 점을 적어주세요"
+                className="mission-modal-textarea"
+                rows={3}
+                maxLength={300}
+              />
+            </div>
+
+            <Button type="button" disabled={!canSubmit} onClick={handleSubmit}>
+              {isProcessingPhoto ? '사진 처리 중...' : '미션 완료'}
+            </Button>
+          </div>
+        )}
+      </Modal>
+    );
+  };
+
+  try {
+    return renderContent();
+  } catch (err) {
+    console.error('MissionModal render error:', err);
+    return (
+      <Modal isOpen={true} onClose={onClose} ariaLabel={mission?.title ?? '미션'}>
+        <div style={{ padding: 20 }}>
+          <h3>앱 오류</h3>
+          <p>미션 모달을 여는 중 오류가 발생했습니다. 콘솔을 확인하거나 새로고침 해주세요.</p>
+          <button onClick={onClose}>닫기</button>
         </div>
-      )}
-    </Modal>
-  );
+      </Modal>
+    );
+  }
 }
