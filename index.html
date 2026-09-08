@@ -5,6 +5,50 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>미션 빙고</title>
+    <!-- Prevent old index.html being cached by browsers (extra layer beyond vercel.json) -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+    <!-- If a legacy service worker cached an old build, unregister it and clear caches once. -->
+    <script>
+      (function () {
+        try {
+          if (typeof window === 'undefined') return;
+          if (localStorage.getItem('sw-unregistered-v1')) return;
+          if ('serviceWorker' in navigator) {
+            navigator.serviceWorker
+              .getRegistrations()
+              .then(function (regs) {
+                if (regs && regs.length) {
+                  regs.forEach(function (r) {
+                    try {
+                      r.unregister();
+                    } catch (e) {}
+                  });
+                  if ('caches' in window) {
+                    try {
+                      caches.keys().then(function (keys) {
+                        keys.forEach(function (k) {
+                          try {
+                            caches.delete(k);
+                          } catch (e) {}
+                        });
+                      });
+                    } catch (e) {}
+                  }
+                  localStorage.setItem('sw-unregistered-v1', '1');
+                  // reload to ensure we load latest assets
+                  try {
+                    window.location.reload();
+                  } catch (e) {}
+                }
+              })
+              .catch(function () {});
+          }
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
