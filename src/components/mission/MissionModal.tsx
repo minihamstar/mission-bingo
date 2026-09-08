@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { ChangeEvent } from 'react';
 import type { Mission, MissionCompletion } from '../../types';
 import Modal from '../common/Modal';
@@ -61,6 +61,12 @@ export default function MissionModal({
       .finally(() => setIsProcessingPhoto(false));
   };
 
+  const cameraInputRef = useRef<HTMLInputElement | null>(null);
+  const libraryInputRef = useRef<HTMLInputElement | null>(null);
+
+  const triggerCamera = () => cameraInputRef.current?.click();
+  const triggerLibrary = () => libraryInputRef.current?.click();
+
   const handleSubmit = () => {
     if (!canSubmit) return;
     onComplete(mission.id, photoDataUrl, comment.trim());
@@ -98,17 +104,36 @@ export default function MissionModal({
           </div>
 
           <div className="mission-modal-section">
-            <label htmlFor="mission-photo" className="mission-modal-label">
-              인증 사진
-            </label>
+            <div className="mission-modal-label">인증 사진</div>
+
+            <div className="mission-photo-actions">
+              <Button type="button" onClick={triggerCamera} className="mission-photo-button">
+                사진 새로 찍기
+              </Button>
+              <Button type="button" onClick={triggerLibrary} className="mission-photo-button">
+                앨범에서 가져오기
+              </Button>
+            </div>
+
+            {/* 숨겨진 파일 입력: 카메라 촬영용 (capture) */}
             <input
-              id="mission-photo"
+              ref={cameraInputRef}
               type="file"
               accept="image/*"
               capture="environment"
               onChange={handlePhotoChange}
-              className="mission-modal-file-input"
+              style={{ display: 'none' }}
             />
+
+            {/* 숨겨진 파일 입력: 앨범 선택용 */}
+            <input
+              ref={libraryInputRef}
+              type="file"
+              accept="image/*"
+              onChange={handlePhotoChange}
+              style={{ display: 'none' }}
+            />
+
             {isProcessingPhoto && <p className="mission-modal-hint">사진을 처리하는 중이에요...</p>}
             {photoError && <p className="mission-modal-error">{photoError}</p>}
             {photoDataUrl && !isProcessingPhoto && (
