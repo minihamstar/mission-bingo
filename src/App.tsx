@@ -42,8 +42,7 @@ function ParticipantFlow() {
 function App() {
   return (
     <BrowserRouter>
-      <UpdateHelper />
-      <ClickDebugOverlay />
+      
       <Routes>
         <Route path="/" element={<ParticipantFlow />} />
         <Route path="/admin" element={<AdminHomePage />} />
