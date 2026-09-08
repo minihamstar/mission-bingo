@@ -444,6 +444,13 @@ button {
   width: 100%;
 }
 
+/* 강제 적용: 일부 CSS 우선순도로 인해 flex-direction이 덮어써질 경우 대비 */
+.mission-modal-body .mission-photo-actions {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 12px !important;
+}
+
 /* ── 저장 오류 안내 배너 ─────────────────────────────── */
 
 .save-error-banner {
