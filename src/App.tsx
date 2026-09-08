@@ -5,6 +5,52 @@ import BingoPage from './pages/BingoPage';
 import CompletePage from './pages/CompletePage';
 import AdminHomePage from './pages/admin/AdminHomePage';
 
+function UpdateHelper() {
+  const isMobile = typeof navigator !== 'undefined' && /Mobi|Android|iPhone/i.test(navigator.userAgent);
+  const isStandalone = typeof (navigator as any).standalone === 'boolean' ? (navigator as any).standalone : false;
+
+  if (!isMobile) return null;
+
+  const handleForceReload = async () => {
+    try {
+      if ('serviceWorker' in navigator) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        for (const r of regs) {
+          try {
+            await r.unregister();
+          } catch (e) {}
+        }
+      }
+      if ('caches' in window) {
+        try {
+          const keys = await caches.keys();
+          for (const k of keys) {
+            try {
+              await caches.delete(k);
+            } catch (e) {}
+          }
+        } catch (e) {}
+      }
+    } catch (e) {}
+    try {
+      // soft reload
+      window.location.reload();
+    } catch (e) {}
+  };
+
+  return (
+    <div style={{ position: 'fixed', bottom: 12, left: 12, right: 12, zIndex: 9999, display: 'flex', justifyContent: 'center' }}>
+      <div style={{ background: '#fff', padding: '8px 12px', borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.12)', fontSize: 13 }}>
+        <div style={{ marginBottom: 6 }}>앱이 업데이트되지 않은 경우 아래 버튼으로 강제 갱신하세요.</div>
+        <div style={{ display: 'flex', gap: 8, justifyContent: 'flex-end' }}>
+          <button onClick={handleForceReload} style={{ background: '#4f46e5', color: '#fff', border: 'none', padding: '6px 10px', borderRadius: 6 }}>업데이트 로드</button>
+        </div>
+        {isStandalone && <div style={{ marginTop: 6, color: '#666' }}>홈화면으로 추가한 경우 아이콘을 삭제 후 다시 추가하세요.</div>}
+      </div>
+    </div>
+  );
+}
+
 /**
  * 참여자가 보는 화면 전체 흐름입니다.
  * - 아직 게임을 시작하지 않았으면 시작 화면
@@ -41,6 +87,7 @@ function ParticipantFlow() {
 function App() {
   return (
     <BrowserRouter>
+      <UpdateHelper />
       <Routes>
         <Route path="/" element={<ParticipantFlow />} />
         <Route path="/admin" element={<AdminHomePage />} />
