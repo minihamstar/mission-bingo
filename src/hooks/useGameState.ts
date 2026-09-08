@@ -78,6 +78,28 @@ export function useGameState() {
     [],
   );
 
+    /** 이미 완료된 미션의 인증(사진/소감)을 수정합니다. */
+    const editCompletion = useCallback((missionId: string, photoDataUrl: string, comment: string) => {
+      setGameState((prev) => {
+        if (!prev) return prev;
+        const completions = prev.completions.map((c) =>
+          c.missionId === missionId
+            ? { ...c, photoDataUrl, comment, completedAt: new Date().toISOString() }
+            : c,
+        );
+
+        const completedIds = new Set(completions.map((c) => c.missionId));
+        const isCompleted = prev.missions.map((mission) => completedIds.has(mission.id));
+        const bingoCount = countBingoLines(isCompleted);
+
+        return {
+          ...prev,
+          completions,
+          bingoCount,
+        };
+      });
+    }, []);
+
   // gameState.bingoCount가 늘어난 순간을 감지해서 축하 애니메이션을 트리거합니다.
   // (setGameState의 업데이트 함수 안에서 직접 다른 상태를 바꾸면 예상치 못한 동작이
   //  생길 수 있어서, 이렇게 별도의 useEffect로 분리했습니다.)
@@ -102,6 +124,7 @@ export function useGameState() {
     gameState,
     startGame,
     completeMission,
+    editCompletion,
     celebrationBingoCount,
     dismissCelebration,
     saveError,

@@ -16,7 +16,7 @@ import AdminHomePage from './pages/admin/AdminHomePage';
  * - 그 외에는 빙고 게임 화면
  */
 function ParticipantFlow() {
-  const { gameState, startGame, completeMission, celebrationBingoCount, dismissCelebration, saveError } =
+  const { gameState, startGame, completeMission, editCompletion, celebrationBingoCount, dismissCelebration, saveError } =
     useGameState();
 
   if (!gameState) {
@@ -33,6 +33,7 @@ function ParticipantFlow() {
     <BingoPage
       gameState={gameState}
       onCompleteMission={completeMission}
+      onEditMission={editCompletion}
       celebrationBingoCount={celebrationBingoCount}
       onDismissCelebration={dismissCelebration}
       saveError={saveError}

@@ -8,6 +8,7 @@ import MissionModal from '../components/mission/MissionModal';
 interface BingoPageProps {
   gameState: GameState;
   onCompleteMission: (missionId: string, photoDataUrl: string, comment: string) => void;
+  onEditMission?: (missionId: string, photoDataUrl: string, comment: string) => void;
   celebrationBingoCount: number | null;
   onDismissCelebration: () => void;
   saveError: boolean;
@@ -28,6 +29,11 @@ export default function BingoPage({
 
   const handleComplete = (missionId: string, photoDataUrl: string, comment: string) => {
     onCompleteMission(missionId, photoDataUrl, comment);
+    setSelectedMissionId(null);
+  };
+
+  const handleEdit = (missionId: string, photoDataUrl: string, comment: string) => {
+    if (onEditMission) onEditMission(missionId, photoDataUrl, comment);
     setSelectedMissionId(null);
   };
 
@@ -59,6 +65,7 @@ export default function BingoPage({
         isOpen={selectedMissionId !== null}
         onClose={() => setSelectedMissionId(null)}
         onComplete={handleComplete}
+        onEdit={handleEdit}
       />
 
       <BingoCelebration bingoNumber={celebrationBingoCount} onDismiss={onDismissCelebration} />

@@ -11,6 +11,7 @@ interface MissionModalProps {
   isOpen: boolean;
   onClose: () => void;
   onComplete: (missionId: string, photoDataUrl: string, comment: string) => void;
+  onEdit?: (missionId: string, photoDataUrl: string, comment: string) => void;
 }
 
 /**
@@ -24,11 +25,13 @@ export default function MissionModal({
   isOpen,
   onClose,
   onComplete,
+  onEdit,
 }: MissionModalProps) {
   const [photoDataUrl, setPhotoDataUrl] = useState('');
   const [comment, setComment] = useState('');
   const [isProcessingPhoto, setIsProcessingPhoto] = useState(false);
   const [photoError, setPhotoError] = useState('');
+  const [isEditMode, setIsEditMode] = useState(false);
 
   const cameraInputRef = useRef<HTMLInputElement | null>(null);
   const libraryInputRef = useRef<HTMLInputElement | null>(null);
@@ -39,6 +42,7 @@ export default function MissionModal({
     setComment('');
     setPhotoError('');
     setIsProcessingPhoto(false);
+    setIsEditMode(false);
   }, [mission?.id, isOpen]);
 
   if (!mission) return null;
@@ -70,7 +74,11 @@ export default function MissionModal({
 
   const handleSubmit = () => {
     if (!canSubmit) return;
-    onComplete(mission.id, photoDataUrl, comment.trim());
+    if (isEditMode && onEdit) {
+      onEdit(mission.id, photoDataUrl, comment.trim());
+    } else {
+      onComplete(mission.id, photoDataUrl, comment.trim());
+    }
   };
   const renderContent = () => {
     return (
@@ -81,7 +89,7 @@ export default function MissionModal({
 
         <h2 className="mission-modal-title">{mission.title}</h2>
 
-        {isCompleted && completion ? (
+        {isCompleted && completion && !isEditMode ? (
           <div className="mission-modal-body">
             <img src={completion.photoDataUrl} alt="제출한 인증 사진" className="mission-modal-photo" />
             <div className="mission-modal-section">
@@ -89,6 +97,16 @@ export default function MissionModal({
               <p className="mission-modal-comment">{completion.comment}</p>
             </div>
             <div className="mission-modal-completed-badge">✓ 완료된 미션이에요</div>
+            <div style={{ marginTop: 12 }}>
+              <Button type="button" variant="secondary" onClick={() => {
+                // enter edit mode, populate fields
+                setPhotoDataUrl(completion.photoDataUrl);
+                setComment(completion.comment);
+                setIsEditMode(true);
+              }}>
+                수정
+              </Button>
+            </div>
           </div>
         ) : (
           <div className="mission-modal-body">
@@ -161,9 +179,30 @@ export default function MissionModal({
               />
             </div>
 
-            <Button type="button" disabled={!canSubmit} onClick={handleSubmit}>
-              {isProcessingPhoto ? '사진 처리 중...' : '미션 완료'}
-            </Button>
+            <div style={{ display: 'flex', gap: 10 }}>
+              <Button type="button" variant="secondary" onClick={() => {
+                // cancel edit / close modal
+                if (isEditMode) {
+                  setIsEditMode(false);
+                  // reset to original completion values if present
+                  if (completion) {
+                    setPhotoDataUrl(completion.photoDataUrl);
+                    setComment(completion.comment);
+                  } else {
+                    setPhotoDataUrl('');
+                    setComment('');
+                  }
+                } else {
+                  onClose();
+                }
+              }}>
+                {isEditMode ? '취소' : '닫기'}
+              </Button>
+
+              <Button type="button" disabled={!canSubmit} onClick={handleSubmit}>
+                {isProcessingPhoto ? '사진 처리 중...' : isEditMode ? '저장' : '미션 완료'}
+              </Button>
+            </div>
           </div>
         )}
       </Modal>
