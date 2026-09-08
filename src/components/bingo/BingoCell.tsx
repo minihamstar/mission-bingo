@@ -19,7 +19,6 @@ export default function BingoCell({ mission, completion, onClick }: BingoCellPro
       type="button"
       className={`bingo-cell${isCompleted ? ' bingo-cell-completed' : ''}`}
       onClick={onClick}
-      data-mission-id={mission.id}
       aria-label={`${mission.title}${isCompleted ? ' (완료됨, 눌러서 인증사진과 소감 보기)' : ' (미완료, 눌러서 미션 확인하기)'}`}
       style={completion ? { backgroundImage: `url(${completion.photoDataUrl})` } : undefined}
     >
