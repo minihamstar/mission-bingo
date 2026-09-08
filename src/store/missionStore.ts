@@ -12,6 +12,30 @@ import { supabase } from '../lib/supabaseClient';
 
 const STORAGE_KEY = 'mission-bingo:missions';
 
+/** Supabase의 snake_case 행을 프론트엔드의 camelCase Mission 타입으로 변환합니다. */
+function mapRowToMission(row: any): Mission {
+  return {
+    id: row.id,
+    title: row.title,
+    description: row.description ?? '',
+    howTo: row.how_to ?? row.howTo ?? '',
+    completionCondition: row.completion_condition ?? row.completionCondition ?? '',
+    isActive: row.is_active ?? row.isActive ?? true,
+  };
+}
+
+/** Mission 타입(camelCase)을 Supabase missions 테이블 컬럼(snake_case)으로 변환합니다. */
+function mapMissionToRow(mission: Mission) {
+  return {
+    id: mission.id,
+    title: mission.title,
+    description: mission.description,
+    how_to: mission.howTo,
+    completion_condition: mission.completionCondition,
+    is_active: mission.isActive,
+  };
+}
+
 /** 저장된 미션 목록을 불러옵니다. 저장된 게 없으면 기본 미션 목록으로 시작합니다 */
 export function loadMissions(): Mission[] {
   try {
@@ -47,7 +71,7 @@ export async function fetchMissionsFromServer(): Promise<Mission[]> {
       // 서버에 데이터가 없으면 로컬 기본값 사용
       return loadMissions();
     }
-    return data as Mission[];
+    return data.map(mapRowToMission);
   } catch (e) {
     console.warn('서버 미션 조회 중 오류:', e);
     return loadMissions();
@@ -58,7 +82,7 @@ export async function fetchMissionsFromServer(): Promise<Mission[]> {
 export async function saveMissionsToServer(missions: Mission[]): Promise<boolean> {
   try {
     // upsert로 id 기준으로 갱신/삽입
-    const { error } = await supabase.from('missions').upsert(missions);
+    const { error } = await supabase.from('missions').upsert(missions.map(mapMissionToRow));
     if (error) {
       console.error('서버에 미션을 저장하지 못했습니다:', error);
       return false;
