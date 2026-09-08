@@ -30,6 +30,9 @@ export default function MissionModal({
   const [isProcessingPhoto, setIsProcessingPhoto] = useState(false);
   const [photoError, setPhotoError] = useState('');
 
+  const cameraInputRef = useRef<HTMLInputElement | null>(null);
+  const libraryInputRef = useRef<HTMLInputElement | null>(null);
+
   // 모달이 새로 열리거나 다른 미션으로 바뀌면 입력값을 초기화합니다.
   useEffect(() => {
     setPhotoDataUrl('');
@@ -61,8 +64,6 @@ export default function MissionModal({
       .finally(() => setIsProcessingPhoto(false));
   };
 
-  const cameraInputRef = useRef<HTMLInputElement | null>(null);
-  const libraryInputRef = useRef<HTMLInputElement | null>(null);
 
   const triggerCamera = () => cameraInputRef.current?.click();
   const triggerLibrary = () => libraryInputRef.current?.click();
