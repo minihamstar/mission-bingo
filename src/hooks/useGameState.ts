@@ -82,9 +82,10 @@ export function useGameState() {
     const editCompletion = useCallback((missionId: string, photoDataUrl: string, comment: string) => {
       setGameState((prev) => {
         if (!prev) return prev;
+        const now = new Date().toISOString();
         const completions = prev.completions.map((c) =>
           c.missionId === missionId
-            ? { ...c, photoDataUrl, comment, completedAt: new Date().toISOString() }
+            ? { ...c, photoDataUrl, comment, completedAt: now, editedAt: now, editedBy: prev.participantName }
             : c,
         );
 

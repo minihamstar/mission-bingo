@@ -26,6 +26,10 @@ export interface MissionCompletion {
   comment: string;
   /** ISO 형식 시간 문자열 (예: new Date().toISOString()) */
   completedAt: string;
+  /** 편집 이력: 마지막으로 수정된 시간(옵션) */
+  editedAt?: string;
+  /** 편집자: 참가자 이름(옵션) */
+  editedBy?: string;
 }
 
 /** 한 팀(참여자)의 게임 전체 상태. localStorage에 이 단위로 저장됩니다 */

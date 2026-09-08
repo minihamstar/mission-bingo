@@ -62,6 +62,7 @@ export default function BingoPage({
       <MissionModal
         mission={selectedMission}
         completion={selectedCompletion}
+        participantName={gameState.participantName}
         isOpen={selectedMissionId !== null}
         onClose={() => setSelectedMissionId(null)}
         onComplete={handleComplete}

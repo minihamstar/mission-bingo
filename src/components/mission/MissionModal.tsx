@@ -12,6 +12,7 @@ interface MissionModalProps {
   onClose: () => void;
   onComplete: (missionId: string, photoDataUrl: string, comment: string) => void;
   onEdit?: (missionId: string, photoDataUrl: string, comment: string) => void;
+  participantName?: string;
 }
 
 /**
@@ -26,6 +27,7 @@ export default function MissionModal({
   onClose,
   onComplete,
   onEdit,
+  participantName,
 }: MissionModalProps) {
   const [photoDataUrl, setPhotoDataUrl] = useState('');
   const [comment, setComment] = useState('');
@@ -97,16 +99,18 @@ export default function MissionModal({
               <p className="mission-modal-comment">{completion.comment}</p>
             </div>
             <div className="mission-modal-completed-badge">✓ 완료된 미션이에요</div>
-            <div style={{ marginTop: 12 }}>
-              <Button type="button" variant="secondary" onClick={() => {
-                // enter edit mode, populate fields
-                setPhotoDataUrl(completion.photoDataUrl);
-                setComment(completion.comment);
-                setIsEditMode(true);
-              }}>
-                수정
-              </Button>
-            </div>
+            {participantName && (
+              <div style={{ marginTop: 12 }}>
+                <Button type="button" variant="secondary" onClick={() => {
+                  // enter edit mode, populate fields
+                  setPhotoDataUrl(completion.photoDataUrl);
+                  setComment(completion.comment);
+                  setIsEditMode(true);
+                }}>
+                  수정
+                </Button>
+              </div>
+            )}
           </div>
         ) : (
           <div className="mission-modal-body">
