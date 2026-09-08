@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useGameState } from './hooks/useGameState';
+import ErrorBoundary from './components/common/ErrorBoundary';
 import StartPage from './pages/StartPage';
 import BingoPage from './pages/BingoPage';
 import CompletePage from './pages/CompletePage';
@@ -42,11 +43,12 @@ function ParticipantFlow() {
 function App() {
   return (
     <BrowserRouter>
-      
-      <Routes>
-        <Route path="/" element={<ParticipantFlow />} />
-        <Route path="/admin" element={<AdminHomePage />} />
-      </Routes>
+      <ErrorBoundary>
+        <Routes>
+          <Route path="/" element={<ParticipantFlow />} />
+          <Route path="/admin" element={<AdminHomePage />} />
+        </Routes>
+      </ErrorBoundary>
     </BrowserRouter>
   );
 }
