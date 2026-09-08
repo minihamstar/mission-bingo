@@ -17,6 +17,7 @@ interface BingoPageProps {
 export default function BingoPage({
   gameState,
   onCompleteMission,
+  onEditMission,
   celebrationBingoCount,
   onDismissCelebration,
   saveError,
