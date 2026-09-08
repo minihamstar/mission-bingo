@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import type { Mission } from '../../types';
 import {
   loadMissions,
-  saveMissions,
   generateMissionId,
   fetchMissionsFromServer,
   saveMissionsToServer,

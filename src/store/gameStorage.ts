@@ -102,7 +102,18 @@ export async function fetchGamesFromServer() {
   try {
     const { data, error } = await supabase.from('games').select('*').order('updated_at', { ascending: false });
     if (error) throw error;
-    return data as GameState[];
+    // Supabase는 snake_case 필드명을 사용하므로, 프론트엔드의 GameState 타입(camelCase)에 맞게 매핑합니다.
+    const mapped = (data || []).map((row: any) => {
+      return {
+        participantName: row.participant_name ?? row.participantName ?? '',
+        missions: row.missions ?? [],
+        completions: row.completions ?? [],
+        bingoCount: typeof row.bingo_count === 'number' ? row.bingo_count : row.bingoCount ?? 0,
+        gameStartedAt: row.game_started_at ?? row.gameStartedAt ?? '',
+        gameCompletedAt: row.game_completed_at ?? row.gameCompletedAt ?? null,
+      } as GameState;
+    });
+    return mapped;
   } catch (e) {
     console.warn('서버에서 게임 목록을 불러오지 못했습니다:', e);
     return [];

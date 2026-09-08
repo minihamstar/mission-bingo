@@ -58,7 +58,7 @@ export async function fetchMissionsFromServer(): Promise<Mission[]> {
 export async function saveMissionsToServer(missions: Mission[]): Promise<boolean> {
   try {
     // upsert로 id 기준으로 갱신/삽입
-    const { error } = await supabase.from('missions').upsert(missions, { returning: 'minimal' });
+    const { error } = await supabase.from('missions').upsert(missions);
     if (error) {
       console.error('서버에 미션을 저장하지 못했습니다:', error);
       return false;
