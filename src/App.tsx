@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { useGameState } from './hooks/useGameState';
 import StartPage from './pages/StartPage';
 import BingoPage from './pages/BingoPage';
