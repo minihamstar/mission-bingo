@@ -433,6 +433,17 @@ button {
   color: #b91c1c;
 }
 
+/* 사진 버튼 그룹 */
+.mission-photo-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mission-photo-button {
+  width: 100%;
+}
+
 /* ── 저장 오류 안내 배너 ─────────────────────────────── */
 
 .save-error-banner {
