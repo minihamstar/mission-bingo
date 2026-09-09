@@ -16,8 +16,16 @@ import AdminHomePage from './pages/admin/AdminHomePage';
  * - 그 외에는 빙고 게임 화면
  */
 function ParticipantFlow() {
-  const { gameState, startGame, completeMission, editCompletion, celebrationBingoCount, dismissCelebration, saveError } =
-    useGameState();
+  const {
+    gameState,
+    startGame,
+    completeMission,
+    editCompletion,
+    resetGame,
+    celebrationBingoCount,
+    dismissCelebration,
+    saveError,
+  } = useGameState();
 
   if (!gameState) {
     return <StartPage onStart={startGame} />;
@@ -34,6 +42,7 @@ function ParticipantFlow() {
       gameState={gameState}
       onCompleteMission={completeMission}
       onEditMission={editCompletion}
+      onReset={resetGame}
       celebrationBingoCount={celebrationBingoCount}
       onDismissCelebration={dismissCelebration}
       saveError={saveError}

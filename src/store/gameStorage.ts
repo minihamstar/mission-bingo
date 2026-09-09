@@ -123,4 +123,7 @@ export async function fetchGamesFromServer() {
 /** 저장된 게임 데이터를 지웁니다 (새 게임을 시작할 때 등에 사용) */
 export function clearGame(): void {
   localStorage.removeItem(STORAGE_KEY);
+  // serverId를 같이 지우지 않으면, 다음 게임을 시작할 때 새 게임 데이터가
+  // 이전 팀의 서버 게임 행을 덮어써버릴 수 있습니다.
+  localStorage.removeItem(`${STORAGE_KEY}:serverId`);
 }

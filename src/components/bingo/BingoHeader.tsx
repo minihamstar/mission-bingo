@@ -3,6 +3,7 @@ interface BingoHeaderProps {
   completedCount: number;
   totalCount: number;
   bingoCount: number;
+  onHome: () => void;
 }
 
 /** 빙고 화면 상단에 팀 이름, 완료 미션 수, 빙고 수, 진행률을 보여줍니다 */
@@ -11,12 +12,18 @@ export default function BingoHeader({
   completedCount,
   totalCount,
   bingoCount,
+  onHome,
 }: BingoHeaderProps) {
   const progress = totalCount === 0 ? 0 : Math.round((completedCount / totalCount) * 100);
 
   return (
     <div className="bingo-header">
-      <div className="bingo-header-team">{participantName} 팀</div>
+      <div className="bingo-header-top">
+        <div className="bingo-header-team">{participantName} 팀</div>
+        <button type="button" className="bingo-header-home" onClick={onHome} aria-label="처음 화면으로">
+          🏠 처음으로
+        </button>
+      </div>
 
       <div className="bingo-header-stats">
         <div className="bingo-stat">

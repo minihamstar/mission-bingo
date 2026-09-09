@@ -167,10 +167,29 @@ button {
   margin-bottom: 18px;
 }
 
+.bingo-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
 .bingo-header-team {
   font-size: 19px;
   font-weight: 800;
-  margin-bottom: 14px;
+}
+
+.bingo-header-home {
+  border: none;
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  font-size: 12.5px;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .bingo-header-stats {

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { GameState, MissionCompletion } from '../types';
 import { getBoardMissionsFromServer } from '../store/missionStore';
 import { countBingoLines } from '../utils/bingoChecker';
-import { loadGame, saveGame } from '../store/gameStorage';
+import { clearGame, loadGame, saveGame } from '../store/gameStorage';
 
 // ─────────────────────────────────────────────────────────
 // 게임 상태를 만들고 다루는 로직을 한 곳에 모아둔 훅(hook)입니다.
@@ -121,11 +121,21 @@ export function useGameState() {
 
   const dismissCelebration = useCallback(() => setCelebrationBingoCount(null), []);
 
+  /** 진행 중인 게임을 초기화하고 팀 이름 입력 화면으로 돌아갑니다 */
+  const resetGame = useCallback(() => {
+    clearGame();
+    previousBingoCountRef.current = 0;
+    setCelebrationBingoCount(null);
+    setSaveError(false);
+    setGameState(null);
+  }, []);
+
   return {
     gameState,
     startGame,
     completeMission,
     editCompletion,
+    resetGame,
     celebrationBingoCount,
     dismissCelebration,
     saveError,

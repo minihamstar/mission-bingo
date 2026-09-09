@@ -9,6 +9,7 @@ interface BingoPageProps {
   gameState: GameState;
   onCompleteMission: (missionId: string, photoDataUrl: string, comment: string) => void;
   onEditMission?: (missionId: string, photoDataUrl: string, comment: string) => void;
+  onReset: () => void;
   celebrationBingoCount: number | null;
   onDismissCelebration: () => void;
   saveError: boolean;
@@ -18,11 +19,19 @@ export default function BingoPage({
   gameState,
   onCompleteMission,
   onEditMission,
+  onReset,
   celebrationBingoCount,
   onDismissCelebration,
   saveError,
 }: BingoPageProps) {
   const [selectedMissionId, setSelectedMissionId] = useState<string | null>(null);
+
+  const handleHome = () => {
+    const confirmed = window.confirm(
+      '처음 화면으로 돌아갈까요?\n지금까지 완료한 미션 기록(사진/소감)이 모두 사라지고 되돌릴 수 없어요.',
+    );
+    if (confirmed) onReset();
+  };
 
   const selectedMission = gameState.missions.find((m) => m.id === selectedMissionId) ?? null;
   const selectedCompletion =
@@ -52,6 +61,7 @@ export default function BingoPage({
         completedCount={gameState.completions.length}
         totalCount={gameState.missions.length}
         bingoCount={gameState.bingoCount}
+        onHome={handleHome}
       />
 
       <BingoBoard
