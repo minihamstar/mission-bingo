@@ -821,6 +821,384 @@ button {
   margin: 0;
 }
 
+/* ── 당첨자 조회 화면 (/winners) ─────────────────────── */
+
+.mono {
+  font-variant-numeric: tabular-nums;
+}
+
+.winners-save-button {
+  width: auto;
+  align-self: flex-start;
+}
+
+.winners-page {
+  min-height: 100vh;
+  padding: 40px 16px 64px;
+}
+
+.winners-wrap {
+  max-width: 640px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.winners-head-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.winners-eyebrow {
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+}
+
+.winners-title {
+  font-size: 26px;
+  font-weight: 900;
+  margin: 6px 0 4px;
+  letter-spacing: -0.01em;
+}
+
+.winners-sub {
+  color: var(--color-text-muted);
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.winners-gear-btn {
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  color: var(--color-text-muted);
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.winners-gear-btn[aria-pressed='true'] {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.winners-stats {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.winners-stat-pill {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 8px 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.winners-stat-pill b {
+  font-size: 15px;
+}
+
+.winners-stat-pill span {
+  font-size: 12.5px;
+  color: var(--color-text-muted);
+}
+
+.winners-search-card {
+  position: sticky;
+  top: 16px;
+  z-index: 5;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 14px;
+}
+
+.winners-search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  background: var(--color-bg);
+}
+
+.winners-search-box:focus-within {
+  border-color: var(--color-primary);
+}
+
+.winners-search-box svg {
+  flex: none;
+  color: var(--color-text-muted);
+}
+
+.winners-search-input {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  width: 100%;
+  font: inherit;
+  font-size: 16px;
+  color: var(--color-text);
+}
+
+.winners-search-input:disabled {
+  color: var(--color-text-muted);
+}
+
+.winners-clear-btn {
+  border: 0;
+  background: transparent;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 4px 6px;
+  border-radius: 8px;
+}
+
+.winners-result-line {
+  margin-top: 10px;
+  font-size: 13.5px;
+  color: var(--color-text-muted);
+  min-height: 18px;
+}
+
+.winners-result-line b {
+  color: var(--color-text);
+}
+
+.winners-result-line mark {
+  background: transparent;
+  color: var(--color-primary);
+  font-weight: 900;
+}
+
+.winners-list-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.winners-list-head,
+.winners-row {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 0.9fr;
+  align-items: center;
+  padding: 12px 18px;
+}
+
+.winners-list-head {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--color-border);
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.winners-list-body {
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+.winners-row {
+  border-bottom: 1px solid var(--color-border);
+  font-size: 14.5px;
+}
+
+.winners-row:last-child {
+  border-bottom: 0;
+}
+
+.winners-row:nth-child(even) {
+  background: var(--color-bg);
+}
+
+.winners-row .winners-name {
+  font-weight: 700;
+}
+
+.winners-row .winners-name mark {
+  background: transparent;
+  color: var(--color-primary);
+  font-weight: 900;
+}
+
+.winners-row .winners-affil {
+  color: var(--color-text-muted);
+}
+
+.winners-row .winners-phone {
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.winners-empty {
+  padding: 40px 18px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.winners-note {
+  font-size: 12.5px;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  border-top: 1px dashed var(--color-border);
+  padding-top: 14px;
+}
+
+.winners-admin-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.winners-admin-card h2 {
+  font-size: 15px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.winners-admin-card .winners-desc {
+  font-size: 12.5px;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin: -8px 0 0;
+}
+
+.winners-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.winners-field label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+}
+
+.winners-file-drop {
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  background: var(--color-bg);
+  font-size: 13.5px;
+  color: var(--color-text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.winners-text-input,
+.winners-num-input {
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  background: var(--color-bg);
+  font: inherit;
+  font-size: 15px;
+  color: var(--color-text);
+}
+
+.winners-num-input {
+  width: 140px;
+}
+
+.winners-preview-table {
+  overflow-x: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+}
+
+.winners-preview-table table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 13px;
+}
+
+.winners-preview-table th,
+.winners-preview-table td {
+  padding: 7px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+  white-space: nowrap;
+}
+
+.winners-preview-table th {
+  color: var(--color-text-muted);
+  font-weight: 700;
+  background: var(--color-bg);
+}
+
+.winners-preview-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.winners-preview-note {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.winners-status-msg {
+  font-size: 13px;
+  padding: 9px 12px;
+  border-radius: 9px;
+}
+
+.winners-status-msg.info {
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+}
+
+.winners-status-msg.ok {
+  background: var(--color-success-bg);
+  color: #15803d;
+}
+
+.winners-status-msg.err {
+  background: #fdecec;
+  color: #c0362c;
+}
+
+@media (max-width: 480px) {
+  .winners-list-head span:last-child,
+  .winners-row .winners-phone {
+    display: none;
+  }
+  .winners-list-head,
+  .winners-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 /* ── 태블릿 이상 화면 ────────────────────────────────── */
 
 @media (min-width: 480px) {

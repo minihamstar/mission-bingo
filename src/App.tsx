@@ -5,6 +5,7 @@ import StartPage from './pages/StartPage';
 import BingoPage from './pages/BingoPage';
 import CompletePage from './pages/CompletePage';
 import AdminHomePage from './pages/admin/AdminHomePage';
+import WinnersPage from './pages/WinnersPage';
 
 
 /**
@@ -57,6 +58,7 @@ function App() {
         <Routes>
           <Route path="/" element={<ParticipantFlow />} />
           <Route path="/admin" element={<AdminHomePage />} />
+          <Route path="/winners" element={<WinnersPage />} />
         </Routes>
       </ErrorBoundary>
     </BrowserRouter>
