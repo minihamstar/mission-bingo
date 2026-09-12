@@ -61,6 +61,7 @@ export async function createGameOnServer(gameState: GameState) {
       bingo_count: gameState.bingoCount,
       game_started_at: gameState.gameStartedAt,
       game_completed_at: gameState.gameCompletedAt,
+      is_test: gameState.isTest,
     };
     const { data, error } = await supabase.from('games').insert(payload).select().single();
     if (error) throw error;
@@ -111,6 +112,7 @@ export async function fetchGamesFromServer() {
         bingoCount: typeof row.bingo_count === 'number' ? row.bingo_count : row.bingoCount ?? 0,
         gameStartedAt: row.game_started_at ?? row.gameStartedAt ?? '',
         gameCompletedAt: row.game_completed_at ?? row.gameCompletedAt ?? null,
+        isTest: row.is_test ?? row.isTest ?? false,
       } as GameState;
     });
     return mapped;

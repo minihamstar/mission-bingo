@@ -22,7 +22,7 @@ export function useGameState() {
   const previousBingoCountRef = useRef(gameState?.bingoCount ?? 0);
 
   /** 팀 이름을 받아 새 게임을 시작합니다 (빙고판에 쓰일 미션 16개를 배정) */
-  const startGame = useCallback(async (participantName: string) => {
+  const startGame = useCallback(async (participantName: string, isTest = false) => {
     previousBingoCountRef.current = 0;
     const missions = await getBoardMissionsFromServer();
     const initialState: GameState = {
@@ -32,6 +32,7 @@ export function useGameState() {
       bingoCount: 0,
       gameStartedAt: new Date().toISOString(),
       gameCompletedAt: null,
+      isTest,
     };
     setGameState(initialState);
     // 서버에 게임 생성 요청(비동기)

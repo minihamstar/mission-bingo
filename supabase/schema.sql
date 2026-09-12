@@ -25,8 +25,12 @@ create table if not exists public.games (
   bingo_count integer not null default 0,
   game_started_at timestamptz not null default now(),
   game_completed_at timestamptz,
-  updated_at timestamptz not null default now()
+  updated_at timestamptz not null default now(),
+  is_test boolean not null default false
 );
+
+-- 이미 games 테이블이 있는 환경(기존 운영 DB)에도 안전하게 반영되도록 별도로 추가합니다.
+alter table public.games add column if not exists is_test boolean not null default false;
 
 -- 3) 보안 설정 (RLS)
 -- 이 앱은 로그인 없이 누구나 참여하는 사내 교육용 도구라서, "링크를 아는 사람은

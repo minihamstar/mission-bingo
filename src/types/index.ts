@@ -42,4 +42,6 @@ export interface GameState {
   bingoCount: number;
   gameStartedAt: string;
   gameCompletedAt: string | null;
+  /** ?test=1로 접속해 시작한 테스트용 게임인지 여부 (관리자 페이지에서 실제 참여와 구분) */
+  isTest: boolean;
 }

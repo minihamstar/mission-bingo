@@ -103,6 +103,17 @@ button {
   margin: 0 0 12px;
 }
 
+.start-test-badge {
+  display: inline-block;
+  margin: 0 0 12px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fff3cd;
+  color: #7a5c00;
+  font-size: 13px;
+  font-weight: 600;
+}
+
 .start-description {
   font-size: 15px;
   line-height: 1.6;
@@ -718,6 +729,34 @@ button {
 .admin-status-done {
   background: var(--color-success-bg);
   color: #15803d;
+}
+
+.admin-status-test {
+  background: #fff3cd;
+  color: #7a5c00;
+}
+
+.admin-filter-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.admin-filter-tab {
+  padding: 6px 14px;
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background: var(--color-bg);
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.admin-filter-tab-active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
 }
 
 /* ── 빙고 축하 애니메이션 ────────────────────────────── */
