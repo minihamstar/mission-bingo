@@ -96,10 +96,20 @@ export async function saveMissionsToServer(missions: Mission[]): Promise<boolean
   }
 }
 
-/** 활성 미션 중 앞에서부터 16개를 서버에서 불러옵니다. 실패하면 로컬에서 대체됩니다. */
+/** 배열을 무작위로 섞은 새 배열을 반환합니다 (Fisher-Yates) */
+function shuffle<T>(array: T[]): T[] {
+  const result = [...array];
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
+/** 활성 미션을 무작위로 섞어 16개를 서버에서 불러옵니다. 실패하면 로컬에서 대체됩니다. */
 export async function getBoardMissionsFromServer(): Promise<Mission[]> {
   const missions = await fetchMissionsFromServer();
-  return missions.filter((m) => m.isActive).slice(0, 16);
+  return shuffle(missions.filter((m) => m.isActive)).slice(0, 16);
 }
 
 /** 활성화된 미션 중 앞에서부터 16개를 뽑아 빙고판을 구성합니다 */
